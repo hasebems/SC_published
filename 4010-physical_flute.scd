@@ -4,7 +4,7 @@
 //===============================
 (
 SynthDef("waveguideFlute", {
-    arg pch = 72, ipress = 0.9, ibreath = 0.09,
+    arg pch = 72, pchDiff = 0, ipress = 0.9, ibreath = 0.09,
         ifeedbk1 = 0.4, ifeedbk2 = 0.4,
         amp = 2, vibrato=0.2, gate = 1;
     var kenv1, kenv2, kenvibr, kvibr, sr, cr, block, poly, signalOut, ifqc;
@@ -13,7 +13,7 @@ SynthDef("waveguideFlute", {
     sr = SampleRate.ir;
     cr = ControlRate.ir;
     block = cr.reciprocal;
-    ifqc = pch.midicps;
+    ifqc = Lag.kr(pch.midicps,0.1 + pchDiff*0.01);
 
     // noise envelope
     kenv1 = EnvGen.kr(Env.new(
@@ -66,37 +66,31 @@ MIDIIn.disconnectAll;
 var node, currentNote;
 
 ~noteOnFunc = {arg src, chan, num, vel;
-    if (node.notNil,
-        {
-            node.set(\ipress, vel/1000 + 0.8, \pch, num);
-            currentNote = num;
-            "changePitch".postln;
-        },
-        {
-            node = Synth.tail(nil,
-                "waveguideFlute",
-                [\amp, 1.0, \ipress, vel/1000 + 0.8, \ibreath, 0.00536,
-                \ifeedbk1, 0.4, \ifeedbk2, 0.4, \pch, num, \vibrato, 0.2]);
-            currentNote = num;
-            "noteon".postln;
-        }
-    );
+    if (node.notNil,{
+        node.set(\ipress, vel/1000 + 0.8, \pch, num, \pchDiff, (currentNote-num).abs );
+        currentNote = num;
+        "changePitch".postln;
+    },
+    {
+        node = Synth.tail(nil,
+        "waveguideFlute",
+        [\amp, 1.0, \ipress, vel/1000 + 0.8, \ibreath, 0.00536,
+        \ifeedbk1, 0.4, \ifeedbk2, 0.4, \pch, num, \vibrato, 0.2]);
+        currentNote = num;
+        "noteon".postln;
+    });
     [chan,num,vel].postln;
 };
 MIDIIn.addFuncTo(\noteOn, ~noteOnFunc);
 
 ~noteOffFunc = {arg src, chan, num, vel;
-    if (node.notNil,
-        {
-            if ( currentNote == num,
-                {
-                    node.release;
-                    node = nil;
-                    "noteoff".postln;
-                }
-            )
-        } 
-    );
+    if (node.notNil,{
+        if ( currentNote == num,{
+            node.release;
+            node = nil;
+            "noteoff".postln;
+        })
+    });
     [chan,num,vel].postln;
 };
 MIDIIn.addFuncTo(\noteOff, ~noteOffFunc);
