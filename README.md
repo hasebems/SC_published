@@ -28,6 +28,7 @@
 - 8IIV-: General Sound / reserved
 - 9IIV-: Special Purpose
   - 9000-KundtsTubeOsc
+  - 9010-KindtsTubeOscKao
 
 ## How to use
 
