@@ -25,6 +25,7 @@
 - 5IIV-: Musical Sound / NonTuned / Drum,Perc.
 - 6IIV-: Musical Sound / NonTuned / Synth Perc.
 - 7IIV-: General Sound / sound effects, environmental sound
+  - 7000-wind-water
 - 8IIV-: General Sound / reserved
 - 9IIV-: Special Purpose
   - 9000-KundtsTubeOsc
