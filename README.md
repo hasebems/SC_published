@@ -15,6 +15,8 @@
   - 1000-physical_EP
 - 2IIV-: Musical Sound / Tuned / Attenuation / Synth
   - 2000-bell_4op_fm_rev
+  - 2010-SinePhongRev
+  - 2020-PulsePhongRev
 - 3IIV-: Musical Sound / Tuned / Continuant / Synth
   - 3000-pulse
   - 3010-lonely

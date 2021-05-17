@@ -19,7 +19,7 @@ SynthDef("KindtsSaw",{
 	var x;
 	freq = LFTri.kr(5, 0.0, vib/20.0, freq);
 	x = Saw.ar(freq, Lag2.kr(amp,0.5));
-	x = BLowPass4.ar(x, MouseY.kr(1000,8000,1), 1.0, 1.0, 0);
+	x = BLowPass4.ar(x, vib*(7000/127)+1000, 1.0, 1.0, 0);
 	x = EnvGen.kr(Env.adsr(0.1, 0, 1, 0.1, 1, -4), gate, doneAction: 2) * x;
 	Out.ar(0, Pan2.ar(x,pan));
 }).add;
