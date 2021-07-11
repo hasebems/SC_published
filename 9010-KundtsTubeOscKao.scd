@@ -29,7 +29,7 @@ SynthDef("KindtsSaw",{
 //	Play SineWave by MIDI Keyboard
 (
 var synth = "KindtsSaw";
-var basePitch = 220.0;
+var basePitch = 400.0;
 ~osc = Synth.new(synth, [\amp, 0]);
 ~noteOnFunc = {arg src, chan, num, vel;
 	~osc.set(\freq, basePitch);

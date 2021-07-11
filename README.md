@@ -17,6 +17,7 @@
   - 2000-bell_4op_fm_rev
   - 2010-SinePhongRev
   - 2020-PulsePhongRev
+  - 2100-EnsembleSineAndPulse
 - 3IIV-: Musical Sound / Tuned / Continuant / Synth
   - 3000-pulse
   - 3010-lonely
